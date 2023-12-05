@@ -19,7 +19,6 @@ for line in lines:
     for hand in hands:
         hand = hand.strip()
         cubes = hand.split(',')
-        print ("HAND", hand)
         while len(cubes) > 0:
             cube = cubes.pop()
             cube = cube.strip()
@@ -27,7 +26,6 @@ for line in lines:
 
             value = int(cube[0])
             color = cube[1]
-            print (color, value)
             if color == 'red' and int(value) > max_red_cubes:
                 is_valid = False
             elif color == 'green' and int(value) > max_green_cubes:
@@ -42,4 +40,46 @@ for line in lines:
         valid_game_id_total += int(game_id)
 
 print("Part 1 solution:", valid_game_id_total)
+total_power = 0
 
+# Part 2
+for line in lines:
+    line = line.rstrip()
+    is_valid = True
+    game = line.split(':')[0]
+    game_id = game.split(' ')[1]
+    data = line.split(':')[1]
+    hands = data.split(';')
+    red_cubes = []
+    green_cubes = []
+    blue_cubes = []
+
+    for hand in hands:
+        hand = hand.strip()
+        cubes = hand.split(',')
+        
+        while len(cubes) > 0:
+            cube = cubes.pop()
+            cube = cube.strip()
+            cube = cube.split(' ')
+
+            value = int(cube[0])
+            color = cube[1]
+            
+            if color == 'red':
+                red_cubes.append(value)
+            elif color == 'green':
+                green_cubes.append(value)
+            elif color == 'blue':
+                blue_cubes.append(value)
+
+    max_red = max(red_cubes)
+    max_green = max(green_cubes)
+    max_blue = max(blue_cubes)
+    total_power += max_red * max_green * max_blue
+
+    if is_valid:
+        valid_game_id_total += int(game_id)
+
+
+print("Part 2 solution:", total_power)
